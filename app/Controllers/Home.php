@@ -18,4 +18,9 @@ class Home extends BaseController
     {
         return view('portofolio');
     }
+
+    public function reang(): string
+    {
+        return view('auth/login');
+    }
 }
