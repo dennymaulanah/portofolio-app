@@ -4,7 +4,7 @@
 <!-- MAIN CONTENT -->
 <main class="ml-64 mt-16 p-8 lg:p-12 relative z-10 space-y-12">
     <div class="max-w-5xl mx-auto space-y-10">
-        
+
         <!-- Profile Photo & Description -->
         <section>
             <h3 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
@@ -50,7 +50,7 @@
                     <span class="material-symbols-outlined text-sm">add</span> Tambah Skill
                 </button>
             </div>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="skills-grid">
                 <!-- Skill Card 1 (HTML5) -->
                 <div class="glass-card p-4 rounded-2xl flex flex-col gap-3 group/card transition duration-300 hover:border-primary/40" id="skill-card-html">
@@ -182,66 +182,28 @@
             </div>
         </section>
 
-        <!-- CV Management & Kontak -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- CV Section -->
-            <section>
-                <h3 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
-                    <span class="material-symbols-outlined">description</span> Manajemen CV
-                </h3>
-                <div class="glass-card p-6 rounded-2xl space-y-6">
-                    <div class="p-4 border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center gap-3 bg-white/5 relative group cursor-pointer" onclick="document.getElementById('cv-file-input').click();">
-                        <span class="material-symbols-outlined text-primary text-3xl">upload_file</span>
-                        <div class="text-center">
-                            <p class="text-sm font-bold text-on-surface" id="cv-filename-label">Curriculum_Vitae_2023.pdf</p>
-                            <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1" id="cv-date-label">Terakhir diperbarui: 12 Nov 2023</p>
-                        </div>
-                        <input type="file" id="cv-file-input" class="hidden" accept=".pdf,.doc,.docx" onchange="previewCVFile(this)">
-                        <button type="button" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer">Ganti PDF</button>
+        <!-- CV Section -->
+        <section>
+            <h3 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined">description</span> Manajemen CV
+            </h3>
+            <div class="glass-card p-6 rounded-2xl space-y-6">
+                <div class="p-4 border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center gap-3 bg-white/5 relative group cursor-pointer" onclick="document.getElementById('cv-file-input').click();">
+                    <span class="material-symbols-outlined text-primary text-3xl">upload_file</span>
+                    <div class="text-center">
+                        <p class="text-sm font-bold text-on-surface" id="cv-filename-label">Curriculum_Vitae_2023.pdf</p>
+                        <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1" id="cv-date-label">Terakhir diperbarui: 12 Nov 2023</p>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">URL Download Langsung</label>
-                        <input id="cv-url-input" class="w-full input-glass rounded-lg px-4 py-3 text-sm font-mono" type="text" value="https://obsidian.tech/files/cv-latest.pdf">
-                    </div>
+                    <input type="file" id="cv-file-input" class="hidden" accept=".pdf,.doc,.docx" onchange="previewCVFile(this)">
+                    <button type="button" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer">Ganti PDF</button>
                 </div>
-            </section>
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">URL Download Langsung</label>
+                    <input id="cv-url-input" class="w-full input-glass rounded-lg px-4 py-3 text-sm font-mono" type="text" value="https://obsidian.tech/files/cv-latest.pdf">
+                </div>
+            </div>
+        </section>
 
-            <!-- Kontak Section -->
-            <section>
-                <h3 class="text-xl font-bold mb-6 text-primary flex items-center gap-2">
-                    <span class="material-symbols-outlined">contact_page</span> Kontak &amp; Media Sosial
-                </h3>
-                <div class="glass-card p-6 rounded-2xl space-y-4">
-                    <div class="flex items-center gap-4 group/item">
-                        <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover/item:text-primary transition-colors">
-                            <span class="material-symbols-outlined">mail</span>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Email</label>
-                            <input id="contact-email" class="w-full bg-transparent border-none p-0 focus:ring-0 text-sm text-on-surface focus:outline-none focus:border-b focus:border-white/25 py-1" type="email" value="developer@obsidian.tech">
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 group/item">
-                        <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover/item:text-primary transition-colors">
-                            <span class="material-symbols-outlined">call</span>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp</label>
-                            <input id="contact-whatsapp" class="w-full bg-transparent border-none p-0 focus:ring-0 text-sm text-on-surface focus:outline-none focus:border-b focus:border-white/25 py-1" type="text" value="+62 812-3456-7890">
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 group/item">
-                        <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover/item:text-primary transition-colors">
-                            <span class="material-symbols-outlined">link</span>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">LinkedIn</label>
-                            <input id="contact-linkedin" class="w-full bg-transparent border-none p-0 focus:ring-0 text-sm text-on-surface focus:outline-none focus:border-b focus:border-white/25 py-1" type="text" value="linkedin.com/in/obsidian-dev">
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
 
     </div>
 </main>
@@ -259,7 +221,7 @@
         <h4 class="font-headline-md text-lg text-primary font-bold mb-6 flex items-center gap-2" id="modal-title">
             <span class="material-symbols-outlined" id="modal-title-icon">work_history</span> <span>Judul Modal</span>
         </h4>
-        
+
         <!-- Form for Career -->
         <div id="career-form-fields" class="space-y-4">
             <div>
@@ -323,34 +285,37 @@
         color: #e5e2e1;
         transition: all 0.2s ease-in-out;
     }
+
     .input-glass:focus {
         border-color: #c0c1ff;
         background: rgba(192, 193, 255, 0.05);
         outline: none;
         box-shadow: 0 0 0 1px #c0c1ff;
     }
-    
+
     /* Animation for table rows and skill cards */
     .slide-in-new {
         animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+
     @keyframes slideIn {
         from {
             opacity: 0;
             transform: translateY(10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
         }
     }
-    
+
     /* Toast styles */
     .toast-success {
         background: rgba(20, 20, 20, 0.85);
         backdrop-filter: blur(12px);
         border-left: 4px solid #c0c1ff;
-        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.02);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.02);
     }
 </style>
 
@@ -364,14 +329,14 @@
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = 'toast-success flex items-center gap-3 px-5 py-4 rounded-xl border border-white/5 text-sm min-w-[280px] slide-in-new';
-        
+
         let icon = 'check_circle';
         let colorClass = 'text-primary';
         if (type === 'error') {
             icon = 'error';
             colorClass = 'text-error';
         }
-        
+
         toast.innerHTML = `
             <span class="material-symbols-outlined ${colorClass}">${icon}</span>
             <div class="flex-1 font-medium text-on-surface">${message}</div>
@@ -379,9 +344,9 @@
                 <span class="material-symbols-outlined text-base">close</span>
             </button>
         `;
-        
+
         container.appendChild(toast);
-        
+
         // Auto-remove after 4 seconds
         setTimeout(() => {
             if (toast) {
@@ -398,7 +363,7 @@
         // Collect Tagline & Biography
         const tagline = document.getElementById('tagline-input').value;
         const biography = document.getElementById('biography-input').value;
-        
+
         showToast('Profil dan Biografi berhasil disimpan!');
     }
 
@@ -420,13 +385,17 @@
             const filename = input.files[0].name;
             const size = (input.files[0].size / 1024 / 1024).toFixed(2);
             document.getElementById('cv-filename-label').innerText = filename + ` (${size} MB)`;
-            
+
             // Format current date
             const today = new Date();
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            const options = {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            };
             const formattedDate = today.toLocaleDateString('id-ID', options);
             document.getElementById('cv-date-label').innerText = 'Terakhir diperbarui: ' + formattedDate;
-            
+
             showToast('File CV terpilih: ' + filename);
         }
     }
@@ -471,16 +440,16 @@
         document.getElementById('modal-title').innerHTML = '<span class="material-symbols-outlined">psychology</span> Tambah Keahlian Baru';
         document.getElementById('career-form-fields').classList.add('hidden');
         document.getElementById('skill-form-fields').classList.remove('hidden');
-        
+
         // Reset fields
         document.getElementById('input-skill-name').value = '';
         document.getElementById('input-skill-icon').value = 'code';
         document.getElementById('input-skill-level').value = '80';
         document.getElementById('input-skill-level-text').innerText = '80%';
-        
+
         // Set action
         document.getElementById('modal-submit-btn').onclick = submitAddSkill;
-        
+
         openModal();
     }
 
@@ -488,19 +457,19 @@
         const name = document.getElementById('input-skill-name').value.trim();
         const icon = document.getElementById('input-skill-icon').value;
         const level = document.getElementById('input-skill-level').value;
-        
+
         if (!name) {
             showToast('Mohon masukkan nama skill!', 'error');
             return;
         }
-        
+
         const grid = document.getElementById('skills-grid');
         const id = 'skill-card-' + Date.now();
-        
+
         const card = document.createElement('div');
         card.className = 'glass-card p-4 rounded-2xl flex flex-col gap-3 group/card transition duration-300 hover:border-primary/40 slide-in-new';
         card.id = id;
-        
+
         card.innerHTML = `
             <div class="flex justify-between items-center">
                 <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
@@ -519,7 +488,7 @@
                 <input class="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-primary" type="range" min="0" max="100" value="${level}" oninput="updateLevelLabel(this, 'level-label-${id}')">
             </div>
         `;
-        
+
         grid.appendChild(card);
         closeModal();
         showToast('Keahlian baru berhasil ditambahkan.');
@@ -530,16 +499,16 @@
         document.getElementById('modal-title').innerHTML = '<span class="material-symbols-outlined">work_history</span> Tambah Jejak Karir';
         document.getElementById('career-form-fields').classList.remove('hidden');
         document.getElementById('skill-form-fields').classList.add('hidden');
-        
+
         // Reset fields
         document.getElementById('input-career-periode').value = '';
         document.getElementById('input-career-posisi').value = '';
         document.getElementById('input-career-perusahaan').value = '';
-        
+
         // Set action
         editingCareerRowId = null;
         document.getElementById('modal-submit-btn').onclick = submitCareerForm;
-        
+
         openModal();
     }
 
@@ -548,19 +517,19 @@
         document.getElementById('modal-title').innerHTML = '<span class="material-symbols-outlined">edit</span> Edit Jejak Karir';
         document.getElementById('career-form-fields').classList.remove('hidden');
         document.getElementById('skill-form-fields').classList.add('hidden');
-        
+
         const row = document.getElementById(rowId);
         const currentPeriode = row.querySelector('.career-periode').innerText;
         const currentPosisi = row.querySelector('.career-posisi').innerText;
         const currentPerusahaan = row.querySelector('.career-perusahaan').innerText;
-        
+
         document.getElementById('input-career-periode').value = currentPeriode;
         document.getElementById('input-career-posisi').value = currentPosisi;
         document.getElementById('input-career-perusahaan').value = currentPerusahaan;
-        
+
         editingCareerRowId = rowId;
         document.getElementById('modal-submit-btn').onclick = submitCareerForm;
-        
+
         openModal();
     }
 
@@ -568,12 +537,12 @@
         const periode = document.getElementById('input-career-periode').value.trim();
         const posisi = document.getElementById('input-career-posisi').value.trim();
         const perusahaan = document.getElementById('input-career-perusahaan').value.trim();
-        
+
         if (!periode || !posisi || !perusahaan) {
             showToast('Semua input riwayat karir wajib diisi!', 'error');
             return;
         }
-        
+
         if (editingCareerRowId) {
             // Edit existing row
             const row = document.getElementById(editingCareerRowId);
@@ -585,11 +554,11 @@
             // Create new row
             const tbody = document.getElementById('career-tbody');
             const id = 'career-row-' + Date.now();
-            
+
             const newRow = document.createElement('tr');
             newRow.className = 'hover:bg-white/5 transition-colors duration-200 slide-in-new';
             newRow.id = id;
-            
+
             newRow.innerHTML = `
                 <td class="px-6 py-4 text-sm text-on-surface-variant career-periode">${periode}</td>
                 <td class="px-6 py-4 text-sm font-bold text-on-surface career-posisi">${posisi}</td>
@@ -608,7 +577,7 @@
             tbody.appendChild(newRow);
             showToast('Riwayat karir baru berhasil ditambahkan.');
         }
-        
+
         closeModal();
     }
 
