@@ -13,4 +13,9 @@ class Admin extends BaseController
     {
         return view('admin/proyek');
     }
+
+    public function tentang(): string
+    {
+        return view('admin/tentang');
+    }
 }

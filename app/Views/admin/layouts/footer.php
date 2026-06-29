@@ -1,7 +1,7 @@
 <!-- Admin Footer -->
 <footer class="ml-64 border-t border-white/5 py-6 px-8">
     <div class="flex justify-between items-center text-on-surface-variant text-xs opacity-50">
-        <p>© 2024 DevPortal Admin</p>
+        <p>© <?= date('Y') ?> Azeria | Portfolio App</p>
         <p>v1.0.0</p>
     </div>
 </footer>
@@ -30,4 +30,5 @@
     }
 </script>
 </body>
+
 </html>
