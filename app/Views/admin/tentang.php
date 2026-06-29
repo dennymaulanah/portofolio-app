@@ -2,7 +2,7 @@
 <?= view('admin/layouts/sidebar', ['activePage' => 'tentang', 'pageTitle' => 'Manajemen Profil']) ?>
 
 <!-- MAIN CONTENT -->
-<main class="ml-64 mt-16 p-8 lg:p-12 relative z-10 space-y-12">
+<main class="ml-0 md:ml-64 mt-16 p-4 md:p-8 lg:p-12 relative z-10 space-y-8 md:space-y-12">
     <div class="max-w-5xl mx-auto space-y-10">
 
         <!-- Profile Photo & Description -->

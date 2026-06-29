@@ -2,7 +2,7 @@
 <?= view('admin/layouts/sidebar', ['activePage' => 'ringkasan', 'pageTitle' => 'Ringkasan']) ?>
 
 <!-- MAIN CONTENT -->
-<main class="ml-64 mt-16 p-8 relative z-10">
+<main class="ml-0 md:ml-64 mt-16 p-4 md:p-8 relative z-10">
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <!-- Total Proyek -->
