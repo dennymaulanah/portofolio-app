@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="dark" lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -76,12 +77,33 @@
                         "body-md": ["Inter"]
                     },
                     "fontSize": {
-                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "display": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                        "headline-md": ["32px", {
+                            "lineHeight": "40px",
+                            "fontWeight": "600"
+                        }],
+                        "body-lg": ["18px", {
+                            "lineHeight": "28px",
+                            "fontWeight": "400"
+                        }],
+                        "display": ["72px", {
+                            "lineHeight": "80px",
+                            "letterSpacing": "-0.02em",
+                            "fontWeight": "700"
+                        }],
+                        "label-md": ["14px", {
+                            "lineHeight": "20px",
+                            "letterSpacing": "0.05em",
+                            "fontWeight": "600"
+                        }],
+                        "headline-lg": ["48px", {
+                            "lineHeight": "56px",
+                            "letterSpacing": "-0.01em",
+                            "fontWeight": "600"
+                        }],
+                        "body-md": ["16px", {
+                            "lineHeight": "24px",
+                            "fontWeight": "400"
+                        }]
                     }
                 },
             },
@@ -136,6 +158,7 @@
         }
     </style>
 </head>
+
 <body class="flex items-center justify-center p-6">
     <!-- Background Atmosphere -->
     <div class="obsidian-glow -top-48 -left-48"></div>
@@ -271,4 +294,5 @@
         });
     </script>
 </body>
+
 </html>

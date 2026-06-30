@@ -11,7 +11,7 @@
             <span class="material-symbols-outlined">dashboard</span>
             <span class="font-label-md">Ringkasan</span>
         </a>
-        <a class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg <?= $activePage === 'proyek' ? 'active' : '' ?>" href="<?=base_url('/admin/proyek') ?>">
+        <a class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg <?= $activePage === 'proyek' ? 'active' : '' ?>" href="<?= base_url('/admin/proyek') ?>">
             <span class="material-symbols-outlined">folder_special</span>
             <span class="font-label-md">Proyek</span>
         </a>

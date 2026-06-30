@@ -245,13 +245,16 @@
         color: white;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .primary-button:hover {
         box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
         transform: translateY(-1px);
     }
+
     .primary-button:active {
         transform: scale(0.95);
     }
+
     .table-row-hover:hover {
         background-color: rgba(192, 193, 255, 0.04);
     }
