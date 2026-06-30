@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>DevPortal Admin Login | Obsidian Tech</title>
+    <title>Portal Portofolio | Azeria</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -110,140 +110,376 @@
         }
     </script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #0a0a0a;
             color: #e5e2e1;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            font-family: 'Inter', sans-serif;
         }
 
         .glass-card {
             background: rgba(18, 18, 18, 0.7);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.04);
+        }
+
+        /* Ambient glow orbs */
         .obsidian-glow {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+            position: fixed;
             border-radius: 50%;
-            filter: blur(60px);
-            z-index: -1;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            will-change: transform;
+            transition: transform 0.15s ease-out;
         }
 
-        .input-glow:focus {
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        .glow-1 {
+            width: min(600px, 80vw);
+            height: min(600px, 80vw);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
+            top: -15%;
+            left: -10%;
+        }
+
+        .glow-2 {
+            width: min(500px, 70vw);
+            height: min(500px, 70vw);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, transparent 70%);
+            bottom: -15%;
+            right: -10%;
+        }
+
+        .glow-3 {
+            width: min(300px, 50vw);
+            height: min(300px, 50vw);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Input focus glow */
+        .input-field {
+            background: rgba(14, 14, 14, 0.9);
+            border: 1px solid rgba(70, 69, 84, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus {
+            box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.12);
             border-color: #6366F1;
+            background: rgba(14, 14, 14, 1);
         }
 
+        /* Primary button */
         .primary-btn {
-            background-color: #6366F1;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #6366F1, #4f46e5);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .primary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .primary-btn:hover::before {
+            left: 100%;
         }
 
         .primary-btn:hover {
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 4px 30px rgba(99, 102, 241, 0.45);
             transform: translateY(-2px);
         }
 
         .primary-btn:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.3);
         }
 
+        .primary-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Material icon baseline */
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        /* Page entrance animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .fade-up-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .fade-up-delay-2 {
+            animation-delay: 0.25s;
+        }
+
+        .fade-up-delay-3 {
+            animation-delay: 0.4s;
+        }
+
+        /* Shake for errors */
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-6px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            60% {
+                transform: translateX(-4px);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        .animate-shake {
+            animation: shake 0.35s ease-in-out;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-100vh) scale(1.5);
+            }
+        }
+
+        /* Pulse ring on brand icon */
+        @keyframes pulseRing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.35);
+            }
+
+            70% {
+                box-shadow: 0 0 0 12px rgba(99, 102, 241, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+            }
+        }
+
+        .pulse-ring {
+            animation: pulseRing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Label float animation on focus */
+        .input-group label {
+            transition: color 0.25s ease;
+        }
+
+        .input-group:focus-within label {
+            color: #6366F1 !important;
+        }
+
+        /* Responsive scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            .glass-card {
+                border-radius: 1rem;
+            }
+        }
+
+        @media (max-height: 680px) {
+            .brand-header {
+                margin-bottom: 1.5rem !important;
+            }
+
+            .footer-section {
+                margin-top: 1.5rem !important;
+            }
         }
     </style>
 </head>
 
-<body class="flex items-center justify-center p-6">
-    <!-- Background Atmosphere -->
-    <div class="obsidian-glow -top-48 -left-48"></div>
-    <div class="obsidian-glow -bottom-48 -right-48"></div>
+<body class="flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
+
+    <!-- Background Atmosphere Orbs -->
+    <div class="obsidian-glow glow-1" id="glow1"></div>
+    <div class="obsidian-glow glow-2" id="glow2"></div>
+    <div class="obsidian-glow glow-3" id="glow3"></div>
+
+    <!-- Floating Particles Container -->
+    <div id="particles"></div>
 
     <!-- Login Container -->
-    <div class="relative z-10 w-full max-w-md">
+    <div class="relative z-10 w-full max-w-[420px]">
+
         <!-- Brand Logo Header -->
-        <div class="flex flex-col items-center mb-10 space-y-4">
-            <div class="w-20 h-20 rounded-xl bg-surface-container-low flex items-center justify-center border border-white/5 shadow-2xl">
-                <img alt="DevCraft Admin Logo" class="w-14 h-14 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLuVkEFQx5ic-Mch7w2IH4P6x8sBbrBTniy8rr1r-bxfcfE01lExrtCoYWk5WNfyPiBg76xo2W_i6o_LwjM5hdB-sWBWABUMt695ZTOiNeSigPAs3qg2guCgWB8ZRaNwr_2h8c4iHuUN4EROFmk9uwwsvyxwSdGh7VsxtMoc1i_VW89AdaSuFsQxvCU5-Wzr0dzdkNbN4pEDNMEzCb5SMk_UsSDHyhLVT1JjLf36Z-b-L87GfS3CTboATTk">
+        <div class="flex flex-col items-center mb-8 sm:mb-10 space-y-3 brand-header fade-up fade-up-delay-1">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center pulse-ring">
+                <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl" style="font-variation-settings: 'FILL' 1;">shield_person</span>
             </div>
             <div class="text-center">
-                <h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">DevCraft Admin</h1>
-                <p class="font-body-md text-body-md text-on-surface-variant mt-1 opacity-70">Obsidian Tech v1.0 • Portal Akses</p>
+                <h1 class="font-headline-md text-[24px] sm:text-headline-md text-on-surface tracking-tight leading-tight">Portal Portofolio</h1>
+                <p class="font-body-md text-[14px] sm:text-body-md text-on-surface-variant mt-1 opacity-70">Portal Akses</p>
             </div>
         </div>
 
         <!-- Glassmorphism Form Card -->
-        <div class="glass-card rounded-2xl p-8 md:p-10">
-            <form class="space-y-6" id="loginForm">
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 fade-up fade-up-delay-2">
+
+            <!-- Alert Error -->
+            <div id="errorAlert" class="hidden mb-5 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-start gap-2.5 transition-all">
+                <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">error</span>
+                <span id="errorMessage" class="leading-relaxed"></span>
+            </div>
+
+            <form class="space-y-5 sm:space-y-6" id="loginForm">
+
                 <!-- Email Input -->
-                <div class="space-y-2">
-                    <label class="block font-label-md text-label-md text-on-surface-variant" for="email">ALAMAT EMAIL</label>
+                <div class="space-y-2 input-group">
+                    <label class="block font-label-md text-[12px] sm:text-label-md text-on-surface-variant tracking-widest" for="email">ALAMAT EMAIL</label>
                     <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">
+                        <span class="material-symbols-outlined absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors text-[20px] sm:text-[24px]">
                             mail
                         </span>
-                        <input class="w-full bg-[#0e0e0e] border border-outline-variant/30 rounded-lg py-3.5 pl-12 pr-4 text-on-surface focus:outline-none input-glow transition-all font-body-md" id="email" name="email" placeholder="admin@devcraft.io" required type="email">
+                        <input class="w-full input-field rounded-lg sm:rounded-xl py-3 sm:py-3.5 pl-11 sm:pl-12 pr-4 text-on-surface focus:outline-none font-body-md text-[15px] sm:text-[16px] placeholder:text-on-surface-variant/30" id="email" name="email" placeholder="admin@azeria.com" required type="email" autocomplete="email">
                     </div>
                 </div>
 
                 <!-- Password Input -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center">
-                        <label class="block font-label-md text-label-md text-on-surface-variant" for="password">KATA SANDI</label>
-                        <a class="font-label-md text-label-md text-primary hover:underline transition-all" href="#">Lupa Password?</a>
-                    </div>
+                <div class="space-y-2 input-group">
+                    <label class="block font-label-md text-[12px] sm:text-label-md text-on-surface-variant tracking-widest" for="password">KATA SANDI</label>
                     <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">
+                        <span class="material-symbols-outlined absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors text-[20px] sm:text-[24px]">
                             lock
                         </span>
-                        <input class="w-full bg-[#0e0e0e] border border-outline-variant/30 rounded-lg py-3.5 pl-12 pr-12 text-on-surface focus:outline-none input-glow transition-all font-body-md" id="password" name="password" placeholder="••••••••" required type="password">
-                        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors" onclick="togglePassword()" type="button">
-                            <span class="material-symbols-outlined" id="passIcon">visibility</span>
+                        <input class="w-full input-field rounded-lg sm:rounded-xl py-3 sm:py-3.5 pl-11 sm:pl-12 pr-11 sm:pr-12 text-on-surface focus:outline-none font-body-md text-[15px] sm:text-[16px] placeholder:text-on-surface-variant/30" id="password" name="password" placeholder="••••••••" required type="password" autocomplete="current-password">
+                        <button class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface active:scale-90 transition-all p-0.5" onclick="togglePassword()" type="button" aria-label="Toggle password visibility">
+                            <span class="material-symbols-outlined text-[20px] sm:text-[24px]" id="passIcon">visibility</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
-                <button class="w-full primary-btn text-white font-label-md text-label-md py-4 rounded-lg flex items-center justify-center gap-2 group" type="submit">
+                <button class="w-full primary-btn text-white font-label-md text-[13px] sm:text-label-md py-3.5 sm:py-4 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 group mt-2" type="submit" id="submitBtn">
                     <span>Masuk ke Dashboard</span>
-                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">
+                    <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
                         arrow_forward
                     </span>
                 </button>
             </form>
 
-            <!-- Secondary Actions -->
-            <div class="mt-8 pt-8 border-t border-white/5 flex flex-col items-center space-y-4">
-                <p class="font-body-md text-body-md text-on-surface-variant text-center opacity-60">
+            <!-- Secondary Info -->
+            <div class="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/5 flex flex-col items-center space-y-3">
+                <p class="font-body-md text-[13px] sm:text-body-md text-on-surface-variant text-center opacity-50">
                     Sistem Manajemen Internal
                 </p>
-                <div class="flex gap-4">
-                    <span class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant/40">
-                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                <div class="flex gap-4 sm:gap-5">
+                    <span class="flex items-center gap-1.5 font-label-md text-[11px] sm:text-[12px] text-on-surface-variant/35">
+                        <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
                         Secure SSL
                     </span>
-                    <span class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant/40">
-                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">history</span>
-                        v2.4.0
+                    <span class="flex items-center gap-1.5 font-label-md text-[11px] sm:text-[12px] text-on-surface-variant/35">
+                        <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">history</span>
+                        v1.0.0
                     </span>
                 </div>
             </div>
         </div>
 
         <!-- Decorative Footer -->
-        <p class="mt-12 text-center font-label-md text-label-md text-on-surface-variant opacity-40 uppercase tracking-widest">
-            © 2024 DevCraft Collective • All Rights Reserved
+        <p class="mt-8 sm:mt-12 text-center font-label-md text-[10px] sm:text-[11px] text-on-surface-variant opacity-30 uppercase tracking-[0.2em] footer-section fade-up fade-up-delay-3">
+            © <?= date('Y') ?> AZERIA • ALL RIGHTS RESERVED
         </p>
     </div>
 
-    <!-- Background Interactions -->
+    <!-- Scripts -->
     <script>
-        // Password toggle visibility
+        // ── Password Toggle ──
         function togglePassword() {
             const input = document.getElementById('password');
             const icon = document.getElementById('passIcon');
@@ -256,41 +492,108 @@
             }
         }
 
-        // Interactive subtle background mouse movement
-        document.addEventListener('mousemove', (e) => {
-            const glows = document.querySelectorAll('.obsidian-glow');
-            const x = (e.clientX / window.innerWidth) - 0.5;
-            const y = (e.clientY / window.innerHeight) - 0.5;
+        // ── Parallax Glow Orbs (mouse + touch) ──
+        function moveGlows(x, y) {
+            const g1 = document.getElementById('glow1');
+            const g2 = document.getElementById('glow2');
+            const g3 = document.getElementById('glow3');
+            const nx = (x / window.innerWidth) - 0.5;
+            const ny = (y / window.innerHeight) - 0.5;
+            if (g1) g1.style.transform = `translate(${nx * 30}px, ${ny * 30}px)`;
+            if (g2) g2.style.transform = `translate(${nx * -20}px, ${ny * -20}px)`;
+            if (g3) g3.style.transform = `translate(calc(-50% + ${nx * 15}px), calc(-50% + ${ny * 15}px))`;
+        }
 
-            glows.forEach((glow, index) => {
-                const multiplier = (index + 1) * 20;
-                glow.style.transform = `translate(${x * multiplier}px, ${y * multiplier}px)`;
+        document.addEventListener('mousemove', (e) => moveGlows(e.clientX, e.clientY));
+        document.addEventListener('touchmove', (e) => {
+            const t = e.touches[0];
+            moveGlows(t.clientX, t.clientY);
+        }, {
+            passive: true
+        });
+
+        // ── Floating Particles ──
+        (function createParticles() {
+            const container = document.getElementById('particles');
+            const count = window.innerWidth < 640 ? 6 : 12;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.bottom = '-4px';
+                p.style.width = (Math.random() * 2 + 1) + 'px';
+                p.style.height = p.style.width;
+                p.style.animation = `float ${Math.random() * 8 + 8}s linear ${Math.random() * 6}s infinite`;
+                p.style.opacity = '0';
+                container.appendChild(p);
+            }
+        })();
+
+        // ── Input Focus Ripple Effect ──
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('scale-[1.01]');
+                input.parentElement.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('scale-[1.01]');
             });
         });
 
-        // Simple form handling
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        // ── AJAX Form Handling ──
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const btn = document.getElementById('submitBtn');
             const originalContent = btn.innerHTML;
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
 
-            // Loading state simulation
+            errorAlert.classList.add('hidden');
+
+            // Loading state
             btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span><span>Memproses...</span>';
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span><span>Memproses...</span>';
 
-            setTimeout(() => {
-                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span><span>Berhasil!</span>';
-                btn.classList.remove('bg-primary');
-                btn.classList.add('bg-green-600');
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('<?= base_url('/reang') ?>', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
 
-                setTimeout(() => {
-                    alert('Login berhasil diproses. Mengarahkan ke Dashboard...');
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // Success state
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span><span>Berhasil!</span>';
+                    btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                    btn.style.boxShadow = '0 4px 25px rgba(16, 185, 129, 0.35)';
+
+                    setTimeout(() => {
+                        window.location.href = '<?= base_url('/admin/dashboard') ?>';
+                    }, 800);
+                } else {
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
-                    btn.classList.add('bg-primary');
-                    btn.classList.remove('bg-green-600');
-                }, 1000);
-            }, 2000);
+
+                    // Show error
+                    errorMessage.innerHTML = result.message;
+                    errorAlert.classList.remove('hidden');
+                    errorAlert.classList.add('animate-shake');
+                    setTimeout(() => errorAlert.classList.remove('animate-shake'), 400);
+                }
+            } catch (error) {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                errorMessage.innerText = 'Terjadi kesalahan sistem, silakan coba lagi.';
+                errorAlert.classList.remove('hidden');
+                errorAlert.classList.add('animate-shake');
+                setTimeout(() => errorAlert.classList.remove('animate-shake'), 400);
+            }
         });
     </script>
 </body>

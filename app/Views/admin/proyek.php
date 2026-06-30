@@ -2,7 +2,7 @@
 <?= view('admin/layouts/sidebar', ['activePage' => 'proyek', 'pageTitle' => 'Manajemen Proyek']) ?>
 
 <!-- MAIN CONTENT -->
-<main class="ml-64 mt-16 p-8 lg:p-12 relative z-10 space-y-12">
+<main class="ml-0 md:ml-64 mt-16 p-4 md:p-8 lg:p-12 relative z-10 space-y-8 md:space-y-12">
     <!-- Hero Section / Header -->
     <section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
