@@ -6,7 +6,13 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-gutter items-center">
             <div class="lg:col-span-5 relative">
                 <div class="aspect-square max-w-[320px] sm:max-w-[400px] lg:max-w-none mx-auto rounded-3xl overflow-hidden glass-card p-3 md:p-4 relative z-10">
-                    <img class="w-full h-full object-cover rounded-2xl" alt="Professional portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACcwX8uD_10xYXnSNdTG85QwBjIl63UiSEKPDgLlTlrpuz31mhvVoAw2cncs0FUUbx1kOcysfsKH65ZXa3k03drvmEEUtyk4ZzqUu9qdptYIAs8-EedMAby7rirbOapeA85bVDJMiZs2i3-Lfg-qLs7oW_PS88M6I08RKXCurbBVdJ7RaOcO5GLirA6xHTv-MxQvYqsGka964OZp-Ynd-zhXsMJtoXT0x048nFvxPG4FUHS597nTIESYSJGw9s8HmIgVwYtOguOUM" />
+                    <?php
+                    $photoUrl = 'https://lh3.googleusercontent.com/aida-public/AB6AXuACcwX8uD_10xYXnSNdTG85QwBjIl63UiSEKPDgLlTlrpuz31mhvVoAw2cncs0FUUbx1kOcysfsKH65ZXa3k03drvmEEUtyk4ZzqUu9qdptYIAs8-EedMAby7rirbOapeA85bVDJMiZs2i3-Lfg-qLs7oW_PS88M6I08RKXCurbBVdJ7RaOcO5GLirA6xHTv-MxQvYqsGka964OZp-Ynd-zhXsMJtoXT0x048nFvxPG4FUHS597nTIESYSJGw9s8HmIgVwYtOguOUM';
+                    if (!empty($profil['foto'])) {
+                        $photoUrl = (strpos($profil['foto'], 'http') === 0) ? $profil['foto'] : base_url('uploads/profil/' . $profil['foto']);
+                    }
+                    ?>
+                    <img class="w-full h-full object-cover rounded-2xl" alt="Professional portrait" src="<?= $photoUrl ?>" />
                 </div>
                 <!-- Decorative Element -->
                 <div class="absolute -top-12 -left-12 w-40 h-40 md:w-64 md:h-64 bg-primary/10 rounded-full blur-[80px] -z-10"></div>
@@ -14,19 +20,21 @@
             <div class="lg:col-span-7 space-y-6 md:space-y-8 text-center lg:text-left">
                 <div>
                     <span class="text-primary font-label-md text-[12px] md:text-label-md uppercase tracking-widest mb-3 md:mb-4 block">Tentang Saya</span>
-                    <h1 class="font-display text-[24px] sm:text-headline-lg-mobile md:text-headline-lg mb-4 md:mb-6 leading-tight">Membangun Solusi Digital dengan <span class="text-primary">Presisi</span> &amp; <span class="text-primary">Kehandalan</span></h1>
+                    <h1 class="font-display text-[24px] sm:text-headline-lg-mobile md:text-headline-lg mb-4 md:mb-6 leading-tight"><?= $profil['tagline'] ?></h1>
                     <p class="text-on-surface-variant font-body-lg text-[15px] md:text-body-lg max-w-2xl mx-auto lg:mx-0">
-                        Saya adalah seorang pengembang perangkat lunak yang berfokus pada pembuatan aplikasi web yang tidak hanya memiliki kinerja tinggi, tetapi juga memberikan pengalaman pengguna yang sangat halus. Dedikasi saya pada standar teknik modern memastikan setiap baris kode yang saya tulis bersifat skalabel, aman, dan mudah dikelola.
+                        <?= nl2br(esc($profil['biografi'] ?? '')) ?>
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center lg:justify-start">
-                    <button class="flex items-center justify-center gap-3 bg-primary text-on-primary px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:scale-105 active:scale-95 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-200">
+                    <?php if (!empty($profil['cv_file'])): ?>
+                    <a href="<?= base_url('/cv-latest') ?>" target="_blank" class="flex items-center justify-center gap-3 bg-primary text-on-primary px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:scale-105 active:scale-95 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-200 no-underline">
                         <span class="material-symbols-outlined text-[20px]">download</span>
                         Download CV
-                    </button>
-                    <button class="flex items-center justify-center gap-3 bg-transparent border border-white/20 text-on-surface px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:bg-white/5 transition-all duration-200">
+                    </a>
+                    <?php endif; ?>
+                    <a href="https://wa.me/628123456789" class="flex items-center justify-center gap-3 bg-transparent border border-white/20 text-on-surface px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:bg-white/5 transition-all duration-200 no-underline">
                         Hubungi Saya
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -40,87 +48,33 @@
                 <p class="text-on-surface-variant font-body-md text-[14px] md:text-body-md max-w-xl mx-auto">Tumpukan teknologi yang saya kuasai untuk menghidupkan ide-ide kompleks menjadi kenyataan digital yang elegan.</p>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-                <!-- Tech Item -->
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">html</span>
+                <?php if (empty($skills)): ?>
+                    <div class="col-span-2 sm:col-span-3 lg:col-span-4 text-center py-8 text-on-surface-variant/60">Belum ada data keahlian teknis.</div>
+                <?php else: ?>
+                    <?php foreach ($skills as $s): ?>
+                    <?php 
+                    $lvl = (int)$s['level'];
+                    $badge = 'Beginner';
+                    if ($lvl >= 90) {
+                        $badge = 'Expert';
+                    } elseif ($lvl >= 80) {
+                        $badge = 'Advanced';
+                    } elseif ($lvl >= 60) {
+                        $badge = 'Intermediate';
+                    }
+                    ?>
+                    <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
+                            <span class="material-symbols-outlined text-primary text-2xl md:text-4xl"><?= esc($s['ikon']) ?></span>
+                        </div>
+                        <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2"><?= esc($s['nama']) ?></h3>
+                        <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
+                            <div class="h-full bg-primary" style="width: <?= $lvl ?>%"></div>
+                        </div>
+                        <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md"><?= $badge ?></span>
                     </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">HTML5</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[95%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Expert</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">css</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">CSS3 / Tailwind</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[90%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Expert</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">javascript</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">Vanilla JS</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[85%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Advanced</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">code</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">CodeIgniter 4</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[80%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Advanced</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">api</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">REST API</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[88%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Advanced</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">database</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">SQL / MySQL</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[82%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Advanced</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">terminal</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">Git / CLI</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[92%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Expert</span>
-                </div>
-                <div class="glass-card p-4 md:p-8 rounded-xl md:rounded-2xl flex flex-col items-center text-center">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-container/20 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                        <span class="material-symbols-outlined text-primary text-2xl md:text-4xl">architecture</span>
-                    </div>
-                    <h3 class="font-display text-[14px] md:text-body-lg font-bold mb-1 md:mb-2">UX Design</h3>
-                    <div class="w-full h-1 md:h-1.5 bg-white/5 rounded-full mt-2 md:mt-4 overflow-hidden">
-                        <div class="h-full bg-primary w-[75%]"></div>
-                    </div>
-                    <span class="text-[10px] md:text-xs text-on-surface-variant mt-1.5 md:mt-2 font-label-md">Intermediate</span>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         <!-- Decorative Glow -->
@@ -135,54 +89,37 @@
                 <p class="mt-3 md:mt-6 text-on-surface-variant font-body-md text-[14px] md:text-body-md">Evolusi saya sebagai pengembang melalui berbagai proyek menantang dan peran strategis.</p>
             </div>
             <div class="lg:col-span-8 border-l border-white/10 ml-2 lg:ml-0 pl-6 lg:pl-12 space-y-8 md:space-y-12 relative">
-                <!-- Timeline Item -->
-                <div class="relative">
-                    <span class="text-primary font-label-md text-[12px] md:text-label-md">2022 - Sekarang</span>
-                    <h3 class="font-display text-[20px] md:text-headline-md mt-1 md:mt-2">Senior Full-Stack Developer</h3>
-                    <p class="text-on-surface-variant text-[14px] md:text-body-md font-bold mt-1">Tech Solutions Inc.</p>
-                    <div class="mt-3 md:mt-4 glass-card p-4 md:p-6 rounded-xl md:rounded-2xl">
-                        <p class="text-on-surface-variant font-body-md text-[13px] md:text-body-md">
-                            Bertanggung jawab atas pengembangan arsitektur web berbasis microservices, memimpin tim frontend untuk implementasi desain yang responsif, dan mengoptimalkan query database yang meningkatkan kecepatan aplikasi sebesar 40%.
-                        </p>
-                        <div class="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4">
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">CodeIgniter 4</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">RESTful API</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">React JS</span>
+                <?php if (empty($careers)): ?>
+                    <div class="text-on-surface-variant/60 py-8 text-center text-sm">Belum ada riwayat karir yang ditambahkan.</div>
+                <?php else: ?>
+                    <?php foreach ($careers as $c): ?>
+                    <div class="relative">
+                        <!-- Dot on timeline -->
+                        <div class="absolute -left-[30px] lg:-left-[54px] top-1.5 w-3 h-3 rounded-full bg-primary border-4 border-surface shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div>
+                        <span class="text-primary font-label-md text-[12px] md:text-label-md"><?= esc($c['periode']) ?></span>
+                        <h3 class="font-display text-[20px] md:text-headline-md mt-1 md:mt-2"><?= esc($c['posisi']) ?></h3>
+                        <p class="text-on-surface-variant text-[14px] md:text-body-md font-bold mt-1"><?= esc($c['perusahaan']) ?></p>
+                        <?php if (!empty($c['deskripsi']) || !empty($c['tags'])): ?>
+                        <div class="mt-3 md:mt-4 glass-card p-4 md:p-6 rounded-xl md:rounded-2xl">
+                            <?php if (!empty($c['deskripsi'])): ?>
+                            <p class="text-on-surface-variant font-body-md text-[13px] md:text-body-md leading-relaxed">
+                                <?= nl2br(esc($c['deskripsi'])) ?>
+                            </p>
+                            <?php endif; ?>
+                            <?php if (!empty($c['tags'])): ?>
+                            <div class="flex flex-wrap gap-1.5 md:gap-2 <?= !empty($c['deskripsi']) ? 'mt-3 md:mt-4' : '' ?>">
+                                <?php foreach (explode(',', $c['tags']) as $tag): ?>
+                                    <?php if (trim($tag) !== ''): ?>
+                                    <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20"><?= esc(trim($tag)) ?></span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php endif; ?>
                         </div>
+                        <?php endif; ?>
                     </div>
-                </div>
-                <!-- Timeline Item -->
-                <div class="relative">
-                    <span class="text-primary font-label-md text-[12px] md:text-label-md">2020 - 2022</span>
-                    <h3 class="font-display text-[20px] md:text-headline-md mt-1 md:mt-2">Web Developer</h3>
-                    <p class="text-on-surface-variant text-[14px] md:text-body-md font-bold mt-1">Creative Digital Agency</p>
-                    <div class="mt-3 md:mt-4 glass-card p-4 md:p-6 rounded-xl md:rounded-2xl">
-                        <p class="text-on-surface-variant font-body-md text-[13px] md:text-body-md">
-                            Fokus pada pembuatan landing page yang mengkonversi tinggi dan dashboard internal perusahaan. Berhasil mengintegrasikan berbagai API pihak ketiga untuk otomatisasi pemasaran.
-                        </p>
-                        <div class="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4">
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">Vanilla JS</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">Sass</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">PHP</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Timeline Item -->
-                <div class="relative">
-                    <span class="text-primary font-label-md text-[12px] md:text-label-md">2018 - 2020</span>
-                    <h3 class="font-display text-[20px] md:text-headline-md mt-1 md:mt-2">Junior Frontend Developer</h3>
-                    <p class="text-on-surface-variant text-[14px] md:text-body-md font-bold mt-1">Startup Hub</p>
-                    <div class="mt-3 md:mt-4 glass-card p-4 md:p-6 rounded-xl md:rounded-2xl">
-                        <p class="text-on-surface-variant font-body-md text-[13px] md:text-body-md">
-                            Memulai perjalanan profesional dengan fokus pada slicing desain Figma ke HTML/CSS pixel-perfect. Belajar pentingnya aksesibilitas dan performa web sejak dini.
-                        </p>
-                        <div class="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-4">
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">HTML/CSS</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">Bootstrap</span>
-                            <span class="px-2.5 py-0.5 md:px-3 md:py-1 bg-primary/10 text-primary text-[11px] md:text-xs rounded-full border border-primary/20">jQuery</span>
-                        </div>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>

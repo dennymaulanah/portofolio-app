@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\ProyekModel;
 use App\Models\FotoProyekModel;
+use App\Models\ProfilModel;
+use App\Models\SkillModel;
+use App\Models\KarirModel;
 
 class Admin extends BaseController
 {
@@ -224,6 +227,321 @@ class Admin extends BaseController
 
     public function tentang(): string
     {
-        return view('admin/tentang');
+        $profilModel = new ProfilModel();
+        $skillModel  = new SkillModel();
+        $karirModel  = new KarirModel();
+        
+        $data['profil'] = $profilModel->first() ?? [
+            'id'       => null,
+            'tagline'  => '',
+            'biografi' => '',
+            'foto'     => '',
+            'cv_file'  => '',
+            'cv_url'   => ''
+        ];
+        $data['skills'] = $skillModel->findAll();
+        $data['careers'] = $karirModel->orderBy('id', 'DESC')->findAll();
+        
+        return view('admin/tentang', $data);
+    }
+
+    public function updateProfil()
+    {
+        $profilModel = new ProfilModel();
+        $profil = $profilModel->first();
+        
+        $rules = [
+            'tagline'  => 'required|max_length[255]',
+            'biografi' => 'required',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+        
+        $data = [
+            'tagline'  => $this->request->getPost('tagline'),
+            'biografi' => $this->request->getPost('biografi'),
+        ];
+        
+        $foto = $this->request->getFile('foto');
+        if ($foto && $foto->isValid() && !$foto->hasMoved()) {
+            if ($profil && !empty($profil['foto']) && strpos($profil['foto'], 'http') !== 0 && $profil['foto'] !== 'default_profile.png') {
+                $oldPath = FCPATH . 'uploads/profil/' . $profil['foto'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            
+            $uploadPath = FCPATH . 'uploads/profil';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            
+            $newName = $foto->getRandomName();
+            $foto->move($uploadPath, $newName);
+            $data['foto'] = $newName;
+        }
+        
+        if ($profil) {
+            $profilModel->update($profil['id'], $data);
+        } else {
+            $profilModel->insert($data);
+        }
+        
+        // Fetch updated photo URL/name to return
+        $updatedProfil = $profilModel->first();
+        $photoSrc = '';
+        if ($updatedProfil && !empty($updatedProfil['foto'])) {
+            $photoSrc = (strpos($updatedProfil['foto'], 'http') === 0) ? $updatedProfil['foto'] : base_url('uploads/profil/' . $updatedProfil['foto']);
+        }
+        
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'message'  => 'Profil berhasil disimpan!',
+            'foto_url' => $photoSrc
+        ]);
+    }
+
+    public function updateCV()
+    {
+        $profilModel = new ProfilModel();
+        $profil = $profilModel->first();
+        
+        $data = [];
+        
+        $cvFile = $this->request->getFile('cv_file');
+        if ($cvFile && $cvFile->isValid() && !$cvFile->hasMoved()) {
+            if ($profil && !empty($profil['cv_file']) && $profil['cv_file'] !== 'Curriculum_Vitae_Azeria.pdf') {
+                $oldPath = FCPATH . 'uploads/cv/' . $profil['cv_file'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            
+            $uploadPath = FCPATH . 'uploads/cv';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            
+            $newName = $cvFile->getRandomName();
+            $cvFile->move($uploadPath, $newName);
+            $data['cv_file'] = $newName;
+        }
+        
+        if (!empty($data)) {
+            if ($profil) {
+                $profilModel->update($profil['id'], $data);
+            } else {
+                $profilModel->insert($data);
+            }
+        }
+        
+        $updatedProfil = $profilModel->first();
+        
+        return $this->response->setJSON([
+            'status'     => 'success',
+            'message'    => 'CV berhasil diperbarui!',
+            'cv_file'    => $updatedProfil['cv_file'] ?? null,
+            'updated_at' => ($updatedProfil && $updatedProfil['updated_at']) ? date('d M Y', strtotime($updatedProfil['updated_at'])) : date('d M Y')
+        ]);
+    }
+
+    public function tambahSkill()
+    {
+        $skillModel = new SkillModel();
+        
+        $rules = [
+            'nama'  => 'required|max_length[100]',
+            'ikon'  => 'required|max_length[50]',
+            'level' => 'required|integer|greater_than_equal_to[0]|less_than_equal_to[100]',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+        
+        $data = [
+            'nama'  => $this->request->getPost('nama'),
+            'ikon'  => $this->request->getPost('ikon'),
+            'level' => (int)$this->request->getPost('level'),
+        ];
+        
+        $skillModel->insert($data);
+        $insertId = $skillModel->getInsertID();
+        
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'message'  => 'Keahlian berhasil ditambahkan!',
+            'id'       => $insertId,
+            'skill'    => $data
+        ]);
+    }
+
+    public function updateSkill($id)
+    {
+        $skillModel = new SkillModel();
+        $skill = $skillModel->find($id);
+        if (!$skill) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Keahlian tidak ditemukan.'
+            ]);
+        }
+        
+        $rules = [
+            'nama'  => 'permit_empty|max_length[100]',
+            'ikon'  => 'permit_empty|max_length[50]',
+            'level' => 'permit_empty|integer|greater_than_equal_to[0]|less_than_equal_to[100]',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+        
+        $data = [];
+        if ($this->request->getPost('nama') !== null) {
+            $data['nama'] = $this->request->getPost('nama');
+        }
+        if ($this->request->getPost('ikon') !== null) {
+            $data['ikon'] = $this->request->getPost('ikon');
+        }
+        if ($this->request->getPost('level') !== null) {
+            $data['level'] = (int)$this->request->getPost('level');
+        }
+        
+        if (!empty($data)) {
+            $skillModel->update($id, $data);
+        }
+        
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Keahlian berhasil diperbarui!'
+        ]);
+    }
+
+    public function hapusSkill($id)
+    {
+        $skillModel = new SkillModel();
+        if (!$skillModel->find($id)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Keahlian tidak ditemukan.'
+            ]);
+        }
+        
+        $skillModel->delete($id);
+        
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Keahlian berhasil dihapus!'
+        ]);
+    }
+
+    public function tambahKarir()
+    {
+        $karirModel = new KarirModel();
+        
+        $rules = [
+            'periode'    => 'required|max_length[100]',
+            'posisi'     => 'required|max_length[255]',
+            'perusahaan' => 'required|max_length[255]',
+            'deskripsi'  => 'permit_empty',
+            'tags'       => 'permit_empty|max_length[255]',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+        
+        $data = [
+            'periode'    => $this->request->getPost('periode'),
+            'posisi'     => $this->request->getPost('posisi'),
+            'perusahaan' => $this->request->getPost('perusahaan'),
+            'deskripsi'  => $this->request->getPost('deskripsi'),
+            'tags'       => $this->request->getPost('tags'),
+        ];
+        
+        $karirModel->insert($data);
+        $insertId = $karirModel->getInsertID();
+        
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'message'  => 'Jejak karir berhasil ditambahkan!',
+            'id'       => $insertId,
+            'career'   => $data
+        ]);
+    }
+
+    public function updateKarir($id)
+    {
+        $karirModel = new KarirModel();
+        $career = $karirModel->find($id);
+        if (!$career) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Jejak karir tidak ditemukan.'
+            ]);
+        }
+        
+        $rules = [
+            'periode'    => 'required|max_length[100]',
+            'posisi'     => 'required|max_length[255]',
+            'perusahaan' => 'required|max_length[255]',
+            'deskripsi'  => 'permit_empty',
+            'tags'       => 'permit_empty|max_length[255]',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+        
+        $data = [
+            'periode'    => $this->request->getPost('periode'),
+            'posisi'     => $this->request->getPost('posisi'),
+            'perusahaan' => $this->request->getPost('perusahaan'),
+            'deskripsi'  => $this->request->getPost('deskripsi'),
+            'tags'       => $this->request->getPost('tags'),
+        ];
+        
+        $karirModel->update($id, $data);
+        
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Jejak karir berhasil diperbarui!'
+        ]);
+    }
+
+    public function hapusKarir($id)
+    {
+        $karirModel = new KarirModel();
+        if (!$karirModel->find($id)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Jejak karir tidak ditemukan.'
+            ]);
+        }
+        
+        $karirModel->delete($id);
+        
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Jejak karir berhasil dihapus!'
+        ]);
     }
 }

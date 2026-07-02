@@ -101,7 +101,7 @@
             <p class="font-body-lg text-[14px] md:text-body-lg text-on-surface-variant max-w-xl mx-auto relative z-10">Konsultasikan kebutuhan aplikasi Anda hari ini dan kita buat dampaknya secara global.</p>
             <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 pt-2 md:pt-4 relative z-10">
                 <button class="btn-primary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-white">Mulai Proyek</button>
-                <button class="btn-secondary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-on-surface">Unduh CV</button>
+                <a href="<?= base_url('/cv-latest') ?>" target="_blank" class="btn-secondary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-on-surface no-underline flex items-center justify-center gap-2">Unduh CV</a>
             </div>
         </div>
     </section>

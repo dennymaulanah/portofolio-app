@@ -90,9 +90,9 @@
 <button class="bg-primary text-on-primary px-10 py-4 rounded-full font-label-md text-lg hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all active:scale-95">
                         Mulai Konsultasi
                     </button>
-<button class="border border-white/20 text-on-surface px-10 py-4 rounded-full font-label-md text-lg hover:bg-white/5 transition-all active:scale-95">
+<a href="<?= base_url('/cv-latest') ?>" target="_blank" class="border border-white/20 text-on-surface px-10 py-4 rounded-full font-label-md text-lg hover:bg-white/5 transition-all active:scale-95 no-underline flex items-center justify-center gap-2">
                         Unduh CV Saya
-                    </button>
+                    </a>
 </div>
 </div>
 <!-- Decorative Gradient -->
