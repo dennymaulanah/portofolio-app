@@ -1,4 +1,12 @@
 <?= view('layouts/header', ['activePage' => 'tentang']) ?>
+<?php
+$settingsModel = new \App\Models\PengaturanModel();
+$pengaturan = $settingsModel->first();
+$waUrl = 'https://wa.me/628123456789';
+if ($pengaturan && !empty($pengaturan['telepon_kontak'])) {
+    $waUrl = 'https://wa.me/' . preg_replace('/[^0-9]/', '', $pengaturan['telepon_kontak']);
+}
+?>
 
 <main class="min-h-screen">
     <!-- Hero / Profile Section -->
@@ -19,7 +27,10 @@
             </div>
             <div class="lg:col-span-7 space-y-6 md:space-y-8 text-center lg:text-left">
                 <div>
-                    <span class="text-primary font-label-md text-[12px] md:text-label-md uppercase tracking-widest mb-3 md:mb-4 block">Tentang Saya</span>
+                    <?php if (!empty($profil['nama'])): ?>
+                    <span class="text-primary font-label-md text-[14px] md:text-[16px] font-bold uppercase tracking-widest mb-1.5 block"><?= esc($profil['nama']) ?></span>
+                    <?php endif; ?>
+                    <span class="text-on-surface-variant/60 font-label-md text-[11px] md:text-[12px] uppercase tracking-widest mb-3 md:mb-4 block">Tentang Saya</span>
                     <h1 class="font-display text-[24px] sm:text-headline-lg-mobile md:text-headline-lg mb-4 md:mb-6 leading-tight"><?= $profil['tagline'] ?></h1>
                     <p class="text-on-surface-variant font-body-lg text-[15px] md:text-body-lg max-w-2xl mx-auto lg:mx-0">
                         <?= nl2br(esc($profil['biografi'] ?? '')) ?>
@@ -32,7 +43,7 @@
                         Download CV
                     </a>
                     <?php endif; ?>
-                    <a href="https://wa.me/628123456789" class="flex items-center justify-center gap-3 bg-transparent border border-white/20 text-on-surface px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:bg-white/5 transition-all duration-200 no-underline">
+                    <a href="<?= $waUrl ?>" target="_blank" class="flex items-center justify-center gap-3 bg-transparent border border-white/20 text-on-surface px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-[14px] md:text-[16px] hover:bg-white/5 transition-all duration-200 no-underline">
                         Hubungi Saya
                     </a>
                 </div>

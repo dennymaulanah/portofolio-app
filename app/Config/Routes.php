@@ -27,3 +27,5 @@ $routes->post('/admin/tentang/hapusSkill/(:num)', 'Admin::hapusSkill/$1');
 $routes->post('/admin/tentang/tambahKarir', 'Admin::tambahKarir');
 $routes->post('/admin/tentang/updateKarir/(:num)', 'Admin::updateKarir/$1');
 $routes->post('/admin/tentang/hapusKarir/(:num)', 'Admin::hapusKarir/$1');
+$routes->get('/admin/pengaturan', 'Admin::pengaturan');
+$routes->post('/admin/pengaturan/update', 'Admin::updatePengaturan');

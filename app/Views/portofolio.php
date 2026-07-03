@@ -1,4 +1,12 @@
 <?= view('layouts/header', ['activePage' => 'portofolio']) ?>
+<?php
+$settingsModel = new \App\Models\PengaturanModel();
+$pengaturan = $settingsModel->first();
+$waUrl = 'https://wa.me/628123456789';
+if ($pengaturan && !empty($pengaturan['telepon_kontak'])) {
+    $waUrl = 'https://wa.me/' . preg_replace('/[^0-9]/', '', $pengaturan['telepon_kontak']);
+}
+?>
 
 <main class="relative">
 <!-- Header Section -->
@@ -87,9 +95,9 @@
                     Mari berkolaborasi untuk mewujudkan ide visioner Anda menjadi kenyataan digital yang fungsional dan estetis.
                 </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-<button class="bg-primary text-on-primary px-10 py-4 rounded-full font-label-md text-lg hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all active:scale-95">
+<a href="<?= $waUrl ?>" target="_blank" class="bg-primary text-on-primary px-10 py-4 rounded-full font-label-md text-lg hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all active:scale-95 no-underline flex items-center justify-center">
                         Mulai Konsultasi
-                    </button>
+                    </a>
 <a href="<?= base_url('/cv-latest') ?>" target="_blank" class="border border-white/20 text-on-surface px-10 py-4 rounded-full font-label-md text-lg hover:bg-white/5 transition-all active:scale-95 no-underline flex items-center justify-center gap-2">
                         Unduh CV Saya
                     </a>

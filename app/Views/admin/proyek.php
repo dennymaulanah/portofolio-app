@@ -35,9 +35,9 @@
             <p class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold">Published</p>
             <h3 class="text-4xl font-black text-on-surface mt-2"><?= $totalPublished ?></h3>
             <?php if ($totalProyek > 0): ?>
-            <div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-4 overflow-hidden">
-                <div class="bg-primary h-full transition-all duration-500" style="width: <?= round(($totalPublished / $totalProyek) * 100) ?>%"></div>
-            </div>
+                <div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-4 overflow-hidden">
+                    <div class="bg-primary h-full transition-all duration-500" style="width: <?= round(($totalPublished / $totalProyek) * 100) ?>%"></div>
+                </div>
             <?php endif; ?>
         </div>
         <div class="glass-card p-6 rounded-2xl">
@@ -48,12 +48,12 @@
         <div class="glass-card p-6 rounded-2xl border-primary/20 bg-primary/5">
             <p class="text-primary text-xs uppercase tracking-widest font-semibold">Kategori Aktif</p>
             <?php
-                $categories = [];
-                foreach ($proyeks as $p) {
-                    if (!in_array($p['kategori'], $categories)) {
-                        $categories[] = $p['kategori'];
-                    }
+            $categories = [];
+            foreach ($proyeks as $p) {
+                if (!in_array($p['kategori'], $categories)) {
+                    $categories[] = $p['kategori'];
                 }
+            }
             ?>
             <h3 class="text-4xl font-black text-primary mt-2"><?= count($categories) ?></h3>
             <p class="text-xs text-primary/60 mt-1"><?= implode(', ', array_slice($categories, 0, 3)) ?></p>
@@ -131,14 +131,14 @@
                                 </td>
                                 <td class="px-6 py-5">
                                     <?php
-                                        $kategoriColors = [
-                                            'Web Dev' => 'bg-secondary/10 text-on-secondary-container border-secondary/20',
-                                            'Mobile'  => 'bg-tertiary/10 text-tertiary border-tertiary/20',
-                                            'UI/UX'   => 'bg-primary/10 text-primary border-primary/20',
-                                            'Desktop' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-                                            'API'     => 'bg-violet-500/10 text-violet-400 border-violet-500/20',
-                                        ];
-                                        $colorClass = $kategoriColors[$proyek['kategori']] ?? 'bg-white/5 text-on-surface-variant border-white/10';
+                                    $kategoriColors = [
+                                        'Web Dev' => 'bg-secondary/10 text-on-secondary-container border-secondary/20',
+                                        'Mobile'  => 'bg-tertiary/10 text-tertiary border-tertiary/20',
+                                        'UI/UX'   => 'bg-primary/10 text-primary border-primary/20',
+                                        'Desktop' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+                                        'API'     => 'bg-violet-500/10 text-violet-400 border-violet-500/20',
+                                    ];
+                                    $colorClass = $kategoriColors[$proyek['kategori']] ?? 'bg-white/5 text-on-surface-variant border-white/10';
                                     ?>
                                     <span class="<?= $colorClass ?> text-xs px-3 py-1 rounded-full border"><?= esc($proyek['kategori']) ?></span>
                                 </td>
@@ -174,10 +174,10 @@
         </div>
 
         <?php if (!empty($proyeks)): ?>
-        <!-- Pagination Info -->
-        <div class="p-4 border-t border-white/5 flex items-center justify-between">
-            <p class="text-xs text-on-surface-variant">Menampilkan <?= count($proyeks) ?> proyek</p>
-        </div>
+            <!-- Pagination Info -->
+            <div class="p-4 border-t border-white/5 flex items-center justify-between">
+                <p class="text-xs text-on-surface-variant">Menampilkan <?= count($proyeks) ?> proyek</p>
+            </div>
         <?php endif; ?>
     </section>
 </main>
@@ -215,6 +215,7 @@
             opacity: 0;
             transform: translateY(-10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);

@@ -16,6 +16,11 @@ class CreateTentang extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+                'null'       => true,
+            ],
             'tagline' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
@@ -128,6 +133,7 @@ class CreateTentang extends Migration
         // Profil default data
         $db->table('profil')->insert([
             'id'         => 1,
+            'nama'       => 'Azeria',
             'tagline'    => 'Membangun Solusi Digital dengan Presisi & Kehandalan',
             'biografi'   => 'Saya adalah seorang pengembang perangkat lunak yang berfokus pada pembuatan aplikasi web yang tidak hanya memiliki kinerja tinggi, tetapi juga memberikan pengalaman pengguna yang sangat halus. Dedikasi saya pada standar teknik modern memastikan setiap baris kode yang saya tulis bersifat skalabel, aman, dan mudah dikelola.',
             'foto'       => 'default_profile.png',

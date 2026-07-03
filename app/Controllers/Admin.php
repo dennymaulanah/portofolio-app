@@ -12,7 +12,17 @@ class Admin extends BaseController
 {
     public function dashboard(): string
     {
-        return view('admin/dashboard');
+        $proyekModel = new ProyekModel();
+        
+        $data['totalProyek'] = $proyekModel->countAll();
+        $data['totalPublished'] = $proyekModel->where('status', 'published')->countAllResults();
+        $data['totalDraft'] = $proyekModel->where('status', 'draft')->countAllResults();
+        
+        // Get latest 5 projects with thumbnail
+        $latest = $proyekModel->getAllWithThumbnail();
+        $data['latestProyeks'] = array_slice($latest, 0, 5);
+
+        return view('admin/dashboard', $data);
     }
 
     public function proyek(): string
@@ -233,6 +243,7 @@ class Admin extends BaseController
         
         $data['profil'] = $profilModel->first() ?? [
             'id'       => null,
+            'nama'     => '',
             'tagline'  => '',
             'biografi' => '',
             'foto'     => '',
@@ -251,6 +262,7 @@ class Admin extends BaseController
         $profil = $profilModel->first();
         
         $rules = [
+            'nama'     => 'required|max_length[100]',
             'tagline'  => 'required|max_length[255]',
             'biografi' => 'required',
         ];
@@ -263,6 +275,7 @@ class Admin extends BaseController
         }
         
         $data = [
+            'nama'     => $this->request->getPost('nama'),
             'tagline'  => $this->request->getPost('tagline'),
             'biografi' => $this->request->getPost('biografi'),
         ];
@@ -542,6 +555,63 @@ class Admin extends BaseController
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => 'Jejak karir berhasil dihapus!'
+        ]);
+    }
+
+    public function pengaturan(): string
+    {
+        $settingsModel = new \App\Models\PengaturanModel();
+        $data['pengaturan'] = $settingsModel->first() ?? [
+            'id'             => null,
+            'nama_situs'     => '',
+            'email_kontak'   => '',
+            'telepon_kontak' => '',
+            'github_url'     => '',
+            'linkedin_url'   => '',
+            'instagram_url'  => '',
+        ];
+        return view('admin/pengaturan', $data);
+    }
+
+    public function updatePengaturan()
+    {
+        $settingsModel = new \App\Models\PengaturanModel();
+        $settings = $settingsModel->first();
+
+        $rules = [
+            'nama_situs'     => 'required|max_length[100]',
+            'email_kontak'   => 'permit_empty|valid_email|max_length[100]',
+            'telepon_kontak' => 'permit_empty|max_length[30]',
+            'github_url'     => 'permit_empty|valid_url|max_length[255]',
+            'linkedin_url'   => 'permit_empty|valid_url|max_length[255]',
+            'instagram_url'  => 'permit_empty|valid_url|max_length[255]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => implode('<br>', $this->validator->getErrors())
+            ]);
+        }
+
+        $data = [
+            'nama_situs'     => $this->request->getPost('nama_situs'),
+            'email_kontak'   => $this->request->getPost('email_kontak'),
+            'telepon_kontak' => $this->request->getPost('telepon_kontak'),
+            'github_url'     => $this->request->getPost('github_url'),
+            'linkedin_url'   => $this->request->getPost('linkedin_url'),
+            'instagram_url'  => $this->request->getPost('instagram_url'),
+        ];
+
+        if ($settings) {
+            $settingsModel->update($settings['id'], $data);
+        } else {
+            $settingsModel->insert($data);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Pengaturan berhasil diperbarui!'
         ]);
     }
 }

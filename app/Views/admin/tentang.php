@@ -29,6 +29,10 @@
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Nama Lengkap</label>
+                        <input id="nama-input" class="w-full input-glass rounded-xl px-4 py-3 font-headline-md text-lg" type="text" value="<?= esc($profil['nama'] ?? '') ?>">
+                    </div>
+                    <div>
                         <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Tagline Utama</label>
                         <input id="tagline-input" class="w-full input-glass rounded-xl px-4 py-3 font-headline-md text-lg" type="text" value="<?= esc($profil['tagline'] ?? '') ?>">
                     </div>
@@ -324,16 +328,18 @@
 
     // Save changes function (Global save button)
     function saveChanges() {
+        const nama = document.getElementById('nama-input').value.trim();
         const tagline = document.getElementById('tagline-input').value.trim();
         const biography = document.getElementById('biography-input').value.trim();
         const fileInput = document.getElementById('file-upload-input');
 
-        if (!tagline || !biography) {
-            showToast('Tagline dan Biografi wajib diisi!', 'error');
+        if (!nama || !tagline || !biography) {
+            showToast('Nama Lengkap, Tagline, dan Biografi wajib diisi!', 'error');
             return;
         }
 
         const formData = new FormData();
+        formData.append('nama', nama);
         formData.append('tagline', tagline);
         formData.append('biografi', biography);
         if (fileInput.files[0]) {

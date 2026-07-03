@@ -1,4 +1,14 @@
 <?= view('layouts/header', ['activePage' => 'portofolio']) ?>
+<?php
+$settingsModel = new \App\Models\PengaturanModel();
+$pengaturan = $settingsModel->first() ?? [
+    'nama_situs'     => 'AzeriaDev',
+    'telepon_kontak' => '6281234567890',
+];
+$waPhone = preg_replace('/[^0-9]/', '', $pengaturan['telepon_kontak']);
+$waText = 'Halo ' . $pengaturan['nama_situs'] . ', saya tertarik dengan proyek ' . $proyek['judul'];
+$waUrl = 'https://wa.me/' . $waPhone . '?text=' . urlencode($waText);
+?>
 
 <main class="relative min-h-screen">
     <!-- Background Atmospheric Glows -->
@@ -130,7 +140,7 @@
 
                     <!-- CTA WhatsApp -->
                     <div class="pt-2">
-                        <a href="https://wa.me/6281234567890?text=Halo%20AzeriaDev,%20saya%20tertarik%20dengan%20proyek%20<?= urlencode($proyek['judul']) ?>" 
+                        <a href="<?= $waUrl ?>" 
                            target="_blank"
                            class="btn-primary text-white w-full py-4 rounded-xl font-label-md flex items-center justify-center gap-2 group/btn">
                             <span class="material-symbols-outlined text-lg">chat_bubble</span>

@@ -1,4 +1,19 @@
 <?= view('layouts/header', ['activePage' => 'beranda']) ?>
+<?php
+$settingsModel = new \App\Models\PengaturanModel();
+$pengaturan = $settingsModel->first() ?? [
+    'nama_situs'     => 'AzeriaDev',
+    'email_kontak'   => '',
+    'telepon_kontak' => '',
+    'github_url'     => '#',
+    'linkedin_url'   => '#',
+    'instagram_url'  => '#',
+];
+$waUrl = 'https://wa.me/628123456789';
+if (!empty($pengaturan['telepon_kontak'])) {
+    $waUrl = 'https://wa.me/' . preg_replace('/[^0-9]/', '', $pengaturan['telepon_kontak']);
+}
+?>
 
 <main class="relative overflow-hidden">
     <!-- Background Atmospheric Glows -->
@@ -16,7 +31,7 @@
                 Tersedia untuk proyek baru
             </div>
             <h1 class="font-display text-[28px] leading-[36px] sm:text-headline-lg-mobile md:text-display text-on-background md:leading-tight">
-                Halo, Saya <span class="text-primary italic">AzeriaDev</span> — Membangun Aplikasi Web & Mobile yang Fokus pada Performa.
+                Halo, Saya <span class="text-primary italic"><?= esc($pengaturan['nama_situs']) ?></span> — Membangun Aplikasi Web & Mobile yang Fokus pada Performa.
             </h1>
             <p class="font-body-lg text-[15px] md:text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
                 Membantu startup dan korporasi menghadirkan pengalaman digital premium melalui kode yang bersih dan desain yang intuitif.
@@ -26,7 +41,7 @@
                     Lihat Proyek
                     <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
                 </a>
-                <a class="btn-secondary px-6 py-3 md:px-8 md:py-4 rounded-xl font-label-md text-[13px] md:text-label-md text-on-surface flex items-center justify-center gap-3" href="#">
+                <a class="btn-secondary px-6 py-3 md:px-8 md:py-4 rounded-xl font-label-md text-[13px] md:text-label-md text-on-surface flex items-center justify-center gap-3" href="<?= $waUrl ?>" target="_blank">
                     Hubungi WhatsApp
                     <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
                 </a>
@@ -100,7 +115,7 @@
             <h2 class="font-display text-[24px] sm:text-headline-lg md:text-display text-on-background max-w-3xl mx-auto leading-tight relative z-10">Mari Membangun Sesuatu yang Luar Biasa.</h2>
             <p class="font-body-lg text-[14px] md:text-body-lg text-on-surface-variant max-w-xl mx-auto relative z-10">Konsultasikan kebutuhan aplikasi Anda hari ini dan kita buat dampaknya secara global.</p>
             <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 pt-2 md:pt-4 relative z-10">
-                <button class="btn-primary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-white">Mulai Proyek</button>
+                <a href="<?= $waUrl ?>" target="_blank" class="btn-primary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-white flex items-center justify-center no-underline">Mulai Proyek</a>
                 <a href="<?= base_url('/cv-latest') ?>" target="_blank" class="btn-secondary px-6 py-3.5 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-label-md text-[13px] md:text-lg text-on-surface no-underline flex items-center justify-center gap-2">Unduh CV</a>
             </div>
         </div>
