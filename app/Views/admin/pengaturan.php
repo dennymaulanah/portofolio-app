@@ -90,44 +90,7 @@
 <!-- TOAST CONTAINER -->
 <div id="toast-container" class="fixed bottom-6 right-6 z-[110] space-y-3"></div>
 
-<!-- ADDITIONAL STYLES FOR INPUTS AND TOAST -->
-<style>
-    .input-glass {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #e5e2e1;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .input-glass:focus {
-        border-color: #c0c1ff;
-        background: rgba(192, 193, 255, 0.05);
-        outline: none;
-        box-shadow: 0 0 0 1px #c0c1ff;
-    }
-
-    .toast-success {
-        background: rgba(20, 20, 20, 0.85);
-        backdrop-filter: blur(12px);
-        border-left: 4px solid #c0c1ff;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.02);
-    }
-    
-    .slide-in-new {
-        animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+<link rel="stylesheet" href="<?= base_url('css/admin-pengaturan.css') ?>" />
 
 <!-- SCRIPT FOR POSTING SETTINGS -->
 <script>

@@ -186,42 +186,7 @@
 <div class="fixed top-[-10%] right-[-5%] w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 <div class="fixed bottom-[-10%] left-[-5%] w-[300px] h-[300px] bg-secondary/5 blur-[100px] rounded-full pointer-events-none"></div>
 
-<style>
-    .primary-button {
-        background-color: #6366F1;
-        color: white;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .primary-button:hover {
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-        transform: translateY(-1px);
-    }
-
-    .primary-button:active {
-        transform: scale(0.95);
-    }
-
-    .table-row-hover:hover {
-        background-color: rgba(192, 193, 255, 0.04);
-    }
-
-    .flash-message {
-        animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes slideInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+<link rel="stylesheet" href="<?= base_url('css/admin-proyek.css') ?>" />
 
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 z-[100] hidden">
