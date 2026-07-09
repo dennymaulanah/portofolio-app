@@ -87,6 +87,14 @@ php_errors.log
 vendor/
 
 #-------------------------
+# User Uploads
+#-------------------------
+/public/uploads/**/*
+!/public/uploads/**/
+!/public/uploads/**/.gitkeep
+!/public/uploads/profil/default_profile.png
+
+#-------------------------
 # IDE / Development Files
 #-------------------------
 
