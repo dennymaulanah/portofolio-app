@@ -1,10 +1,10 @@
 # 🚀 Aplikasi Portofolio Pribadi
 
-Selamat datang di repositori Aplikasi Portofolio Pribadi saya! Proyek ini dirancang untuk menampilkan profil, pengalaman, keterampilan, dan proyek-proyek yang pernah saya kerjakan secara profesional dan interaktif.
+Selamat datang di repositori Aplikasi Portofolio Pribadi! Proyek ini dirancang untuk menampilkan profil, pengalaman, keterampilan, dan proyek-proyek yang pernah dikerjakan secara profesional dan interaktif.
 
 ## 📖 Deskripsi Proyek
 
-Aplikasi ini adalah portofolio web modern yang dibuat untuk memberikan gambaran komprehensif tentang perjalanan karir dan karya saya. Dibangun dengan fokus pada desain yang responsif (mobile-friendly), antarmuka yang bersih, serta performa yang cepat. 
+Aplikasi ini adalah portofolio web modern yang dibuat untuk memberikan gambaran komprehensif tentang perjalanan karir dan karya. Dibangun dengan fokus pada desain yang responsif (mobile-friendly), antarmuka yang bersih, serta performa yang cepat. 
 
 ---
 
