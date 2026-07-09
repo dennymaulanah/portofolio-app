@@ -14,7 +14,7 @@ class Home extends BaseController
         $proyekModel = new ProyekModel();
         // Get up to 3 published projects for the editor's choice / featured section
         $data['proyeks'] = $proyekModel->getPublishedWithThumbnail(3);
-        
+
         return view('welcome_message', $data);
     }
 
@@ -42,7 +42,7 @@ class Home extends BaseController
         $proyekModel = new ProyekModel();
         // Get all published projects for the portfolio catalog page
         $data['proyeks'] = $proyekModel->getPublishedWithThumbnail();
-        
+
         return view('portofolio', $data);
     }
 
@@ -58,7 +58,7 @@ class Home extends BaseController
         return view('detail_proyek', ['proyek' => $proyek]);
     }
 
-    public function reang(): string
+    public function login(): string
     {
         return view('auth/login');
     }
@@ -67,7 +67,7 @@ class Home extends BaseController
     {
         $profilModel = new ProfilModel();
         $profil = $profilModel->first();
-        
+
         if ($profil && !empty($profil['cv_file'])) {
             $filePath = FCPATH . 'uploads/cv/' . $profil['cv_file'];
             if (file_exists($filePath)) {
@@ -77,7 +77,7 @@ class Home extends BaseController
                 return $this->response->download($downloadName, $content);
             }
         }
-        
+
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Berkas CV belum tersedia.');
     }
 }
